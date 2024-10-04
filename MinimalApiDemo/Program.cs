@@ -34,7 +34,9 @@ app.MapGet("/weatherforecast", () => {
     .WithOpenApi();
 
 app.MapPost("/luckynumber", (LuckyNumberRange range) => {
-        if (range.Count < 1) return Results.BadRequest();
+        if (range.Count < 1) return Results.BadRequest("Invalid count");
+
+        if (!(range.Min < range.Max)) return Results.BadRequest("Invalid min-max range");
 
         return Results.Ok(PickLuckyNumbers(range));
     })
